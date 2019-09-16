@@ -1,9 +1,6 @@
 
 const say=require("say");
-const {
-  RTMClient,
-  //WebClient,
-} = require('@slack/client')
+const { RTMClient } = require('@slack/rtm-api');
 const {MessageQueue}=require("./MessageQueue.js");
 const token = process.env.SLACK_SPEECH_BOT_TOKEN;
 
@@ -29,7 +26,6 @@ function queuedSpeak(text){
 }
 
 const rtm = new RTMClient(token);
-//const web = new WebClient(token);
 
 rtm.start();
 queuedSpeak("start");
