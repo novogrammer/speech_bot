@@ -7,10 +7,14 @@ const token = process.env.SLACK_SPEECH_BOT_TOKEN;
 
 let messageQueue=new MessageQueue(1);
 
+function escapeSpeakText(text){
+  return '"'+text.replace(/"/g,'\\\"')+'"';
+}
+
 function promiseSpeak(text){
   return function(){
     return new Promise((resolve,reject)=>{
-      say.speak(text,null,null,(e)=>{
+      say.speak(escapeSpeakText(text),null,null,(e)=>{
         if(!!e){
           reject(e);
         }else{
