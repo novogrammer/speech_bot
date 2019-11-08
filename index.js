@@ -3,7 +3,7 @@ const say=require("say");
 const { RTMClient } = require('@slack/rtm-api');
 const {MessageQueue}=require("./MessageQueue.js");
 const token = process.env.SLACK_SPEECH_BOT_TOKEN;
-
+const urlRegex=require('url-regex');
 
 let messageQueue=new MessageQueue(1);
 
@@ -35,5 +35,9 @@ rtm.start();
 queuedSpeak("start");
 
 rtm.on('message', (event) => {
-  queuedSpeak(event.text);
+  let text=event.text;
+  if(typeof text=="string"){
+    text=text.replace(urlRegex()," URL ");
+    queuedSpeak(text);
+  }
 })
